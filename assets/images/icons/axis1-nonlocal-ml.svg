@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"><defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#122B57"/><stop offset="1" stop-color="#0A1A3A"/></linearGradient>
+<linearGradient id="ring" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00B4DB"/><stop offset=".6" stop-color="#00B4DB"/><stop offset="1" stop-color="#FFD700"/></linearGradient>
+<radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#00B4DB" stop-opacity=".35"/><stop offset="1" stop-color="#00B4DB" stop-opacity="0"/></radialGradient>
+<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs><g fill="none" stroke="#00B4DB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="33.3,38.5 22.0,45.0 10.7,38.5 10.7,25.5 22.0,19.0 33.3,25.5"/><circle cx="46" cy="18" r="4" stroke="#FFD700"/><circle cx="46" cy="46" r="4" stroke="#FFD700"/><circle cx="54" cy="32" r="4" stroke="#FFD700"/><path d="M35 32 42 20M35 32 42 44M35 32H50" stroke="#FFD700"/></g></svg>

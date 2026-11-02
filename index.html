@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  S³ LAB — Smart Small Systems Laboratory
+  Department of Mechanical Engineering, University of Torbat Heydarieh
+  ----------------------------------------------------------------
+  HOW THIS WEBSITE IS ORGANISED (for non-programmers)
+  • index.html ........ page structure (this file)
+  • encyclopedia.html . the MEMS/NEMS encyclopedia page
+  • css/style.css ..... colours, fonts, layout  (colours at the very top)
+  • js/ ............... small programs:
+        csv.js          reads the CSV files
+        tweezer.js      the interactive nanotweezer on the home screen
+        scale.js        the Feynman "Powers of Ten" explorer
+        main.js         builds People, Research, Projects, Publications…
+        encyclopedia.js builds the encyclopedia
+  • data/*.csv ........ ALL the content you will normally edit
+  ================================================================
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>S³ Lab | Smart Small Systems Laboratory</title>
+  <meta name="description" content="S³ Lab — Smart Small Systems Laboratory, University of Torbat Heydarieh. From non-classical mechanics to smart micro/nano systems: MEMS, NEMS, nanotweezers, nanoresonators, energy harvesting and digital twins.">
+  <meta name="keywords" content="MEMS, NEMS, pull-in instability, nanotweezers, nonlocal elasticity, Casimir force, energy harvesting, digital twin, University of Torbat Heydarieh, Smart Small Systems">
+  <meta name="theme-color" content="#0A1A3A">
+  <meta property="og:title" content="S³ Lab — Smart Small Systems Laboratory">
+  <meta property="og:description" content="From Non-Classical Mechanics to Smart Micro/Nano Systems.">
+  <meta property="og:image" content="assets/images/logo/og-image.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo/favicon.svg">
+
+  <!-- Montserrat (brand font) from Google Fonts; if it cannot load, the self-hosted Inter font is used -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ======================= NAVIGATION ======================= -->
+<header class="topbar" id="top">
+  <nav class="nav wrap" aria-label="Main">
+    <a class="brand" href="#home" aria-label="S³ Lab home">
+      <img src="assets/images/logo/sss-logo.svg" alt="" width="40" height="40">
+      <span class="brand-text"><b>S<sup>3</sup> Lab</b><small>Smart Small Systems</small></span>
+    </a>
+    <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#feynman">Feynman</a></li>
+      <li><a href="#people">People</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="encyclopedia.html" class="menu-ency">Encyclopedia</a></li>
+      <li><a href="#contact" class="menu-cta">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- ======================= 1. HERO + LIVE NANOTWEEZER ======================= -->
+<section class="hero" id="home">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker"><span class="dot"></span> Dept. of Mechanical Engineering · University of Torbat Heydarieh</p>
+      <h1>Smart Small<br>Systems <span class="cube">Lab<sup>S³</sup></span></h1>
+      <p class="tagline">From non-classical mechanics to smart micro/nano systems.</p>
+      <p class="lead">We model, control and design MEMS &amp; NEMS — nanotweezers, nanoresonators,
+        nanoswitches and sensors — by joining size-dependent continuum mechanics with
+        machine learning and intelligent control.</p>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="#research">Explore research</a>
+        <a class="btn btn-line" href="encyclopedia.html">MEMS/NEMS Encyclopedia →</a>
+      </div>
+      <ul class="counters" aria-label="Lab at a glance">
+        <li><b data-count="15" data-suffix="+">0</b><span>years of MEMS/NEMS research</span></li>
+        <li><b data-count="75" data-suffix="+">0</b><span>Scopus-indexed works</span></li>
+        <li><b data-count="5">0</b><span>research axes</span></li>
+        <li><b data-count="15">0</b><span>open thesis topics</span></li>
+      </ul>
+    </div>
+
+    <!-- The interactive nanotweezer (drawn by js/tweezer.js) -->
+    <figure class="sim-card" id="sim" aria-label="Interactive electrostatic nanotweezer simulator">
+      <div class="sim-head">
+        <span class="sim-title"><i class="live"></i> Live · Electrostatic Nanotweezer</span>
+        <span class="sim-status" id="simStatus">STABLE</span>
+      </div>
+      <canvas id="tweezerCanvas" height="300"></canvas>
+      <div class="sim-readouts">
+        <div><small>Voltage</small><b id="roV">0.0 V</b></div>
+        <div><small>Tip deflection / arm</small><b id="roD">0.00 μm</b></div>
+        <div><small>Tip gap</small><b id="roG">6.90 μm</b></div>
+        <div><small>Gap / g₀</small><b id="roR">1.000</b></div>
+      </div>
+      <div class="sim-controls">
+        <label class="slider">
+          <span>Applied voltage <b id="vLabel">0 V</b></span>
+          <input type="range" id="vSlider" min="0" max="130" step="0.1" value="0" aria-label="Applied voltage">
+        </label>
+        <div class="sim-buttons">
+          <button class="chip-btn" id="btnSweep">▶ Sweep to pull-in</button>
+          <button class="chip-btn" id="btnStep" title="Apply 94 V suddenly — inertia causes dynamic pull-in">⚡ Step 94 V</button>
+          <button class="chip-btn" id="btnGrab">◎ Nanoparticle</button>
+          <button class="chip-btn" id="btnReset">↺ Reset</button>
+        </div>
+        <label class="slider slider-small" id="dpWrap" hidden>
+          <span>Particle diameter <b id="dpLabel">4.5 μm</b></span>
+          <input type="range" id="dpSlider" min="1.5" max="6" step="0.1" value="4.5" aria-label="Particle diameter">
+        </label>
+      </div>
+      <details class="sim-more">
+        <summary>Equilibrium curve &amp; model</summary>
+        <canvas id="curveCanvas" height="170"></canvas>
+        <p class="model-note">Lumped-parameter model of two carbon-nanowire arms
+          (L = 19.6 μm, φ = 0.30 μm, g₀ = 6.90 μm) calibrated to the COMSOL benchmark
+          of our <a href="https://goharimanesh.github.io/NanoTweezer/" target="_blank" rel="noopener">3D NanoTweezer simulator</a>:
+          pull-in at V<sub>PI</sub> ≈ 99.4 V and gap ≈ 3.72 μm. Dynamics:
+          ü + 2ζωu̇ + ω²u = ω²λV²/(1−u)<sup>n</sup>. Drag up/down on the picture to change the voltage.</p>
+      </details>
+    </figure>
+  </div>
+
+  <!-- moving keyword ribbon -->
+  <div class="ribbon" aria-hidden="true">
+    <div class="ribbon-track">
+      <span>Pull-in instability</span><span>Casimir force</span><span>Nonlocal elasticity</span><span>Strain gradient</span>
+      <span>Nanotweezers</span><span>Graphene &amp; MXene</span><span>PINN</span><span>Digital twin</span>
+      <span>Energy harvesting</span><span>Reinforcement learning</span><span>Couple stress</span><span>Gurtin–Murdoch</span>
+      <span>Pull-in instability</span><span>Casimir force</span><span>Nonlocal elasticity</span><span>Strain gradient</span>
+      <span>Nanotweezers</span><span>Graphene &amp; MXene</span><span>PINN</span><span>Digital twin</span>
+      <span>Energy harvesting</span><span>Reinforcement learning</span><span>Couple stress</span><span>Gurtin–Murdoch</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 2. ABOUT ======================= -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 01</p>
+      <h2>Small systems. <em>Big ideas.</em> Greater impact.</h2>
+      <p class="sec-lead">S³ — <b>Smart Small Systems</b> — is a research laboratory dedicated to the
+        modeling, analysis and design of multiphysics systems at the micro and nano scale. Our core
+        competence is not one device, but a way of thinking: build rigorous physical models of small
+        systems, then make them <em>smart</em> with data, learning and control.</p>
+    </header>
+
+    <div class="about-grid">
+      <article class="panel">
+        <h3><span class="ico">◇</span> Vision</h3>
+        <p>To become a recognised research school in <b>intelligent micro/nano systems</b>, where
+          non-classical mechanics, physics-informed AI and digital twins are combined to solve real
+          problems in health, energy, smart agriculture and precision engineering.</p>
+      </article>
+      <article class="panel">
+        <h3><span class="ico">◈</span> Mission</h3>
+        <ul class="ticks">
+          <li>Develop size-dependent models of nanostructures (nonlocal, strain-gradient, couple-stress, surface elasticity).</li>
+          <li>Predict and control electromechanical instability — pull-in under electrostatic, Casimir and van der Waals forces.</li>
+          <li>Turn models into <b>research assets</b>: open code, datasets, interactive simulators and digital twins.</li>
+          <li>Train MSc &amp; BSc researchers through a coherent, five-axis research platform.</li>
+        </ul>
+      </article>
+      <article class="panel panel-book">
+        <img src="assets/images/icons/book.svg" alt="" width="46" height="46">
+        <h3>The lab's monograph</h3>
+        <p><i>Nonlinear Differential Equations in Micro/nano Mechanics: Application in Micro/Nano
+          Structures and Electromechanical Systems</i> — A. Koochi &amp; M. Abadyan, <b>Elsevier, 2020</b>.</p>
+        <p class="muted">A second book that unifies the five research axes is part of our five-year plan.</p>
+      </article>
+    </div>
+
+    <!-- Research trajectory (click a step) -->
+    <div class="journey" aria-label="Research trajectory">
+      <h3 class="journey-title">A fifteen-year research line <small>click a step</small></h3>
+      <ol class="journey-steps" id="journey">
+        <li data-i="0" class="on"><span>2010–16</span>Size-dependent mechanics</li>
+        <li data-i="1"><span>2010–16</span>Surface effects</li>
+        <li data-i="2"><span>2010–17</span>Electromechanical instability</li>
+        <li data-i="3"><span>2017–21</span>MEMS / NEMS devices</li>
+        <li data-i="4"><span>2021–25</span>Nanosensors &amp; control</li>
+        <li data-i="5"><span>2026 →</span>Intelligent micro/nano systems</li>
+      </ol>
+      <p class="journey-text" id="journeyText"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 3. RESEARCH AXES (data/axes.csv) ======================= -->
+<section class="sec sec-tint" id="research">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 02</p>
+      <h2>Five research axes, one platform</h2>
+      <p class="sec-lead">Every thesis, paper and collaboration in S³ belongs to one of five connected axes.
+        Choose an axis to see its vision, open questions, methods and thesis topics.</p>
+    </header>
+    <div class="axis-tabs" id="axisTabs" role="tablist"></div>
+    <div class="axis-panel" id="axisPanel" role="tabpanel" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ======================= 4. FEYNMAN — PLENTY OF ROOM AT THE BOTTOM ======================= -->
+<section class="sec sec-dark" id="feynman">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 03</p>
+      <h2>“There's Plenty of Room at the Bottom”</h2>
+      <p class="sec-lead">On 29 December 1959, Richard Feynman told the American Physical Society at Caltech
+        that nothing in physics forbids writing the whole encyclopaedia on the head of a pin, building
+        tiny machines, or arranging atoms one by one. Our lab lives in the room he described.</p>
+    </header>
+
+    <div class="feyn-grid">
+      <figure class="feyn-figure">
+        <button class="zoomable" id="infoBtn" aria-label="Enlarge infographic">
+          <img src="assets/images/feynman/plenty-of-room-infographic.jpg" alt="Infographic (in Persian): Plenty of Room at the Bottom — the power of miniaturization and machines of the atomic future" loading="lazy" width="1280" height="693">
+          <span class="zoom-hint">⤢ Enlarge</span>
+        </button>
+        <figcaption>Infographic (Persian): Part 1 — the power of miniaturization (an encyclopaedia on a pin head, all books in a speck of dust, lessons from DNA).
+          Part 2 — machines and the atomic future (swallowing the surgeon, arranging atoms, microscopic computers).</figcaption>
+      </figure>
+
+      <div class="feyn-facts">
+        <div class="fact"><b>×25,000</b><span>reduction needed to write all 24 volumes of the Britannica on a pin head</span></div>
+        <div class="fact"><b>$1,000</b><span>prize for a working motor smaller than 1/64 inch — won by William McLellan in 1960</span></div>
+        <div class="fact"><b>1985</b><span>Tom Newman wins Feynman's second prize by writing a book page 25,000× smaller</span></div>
+        <div class="fact"><b>Today</b><span>NEMS resonators weigh single molecules; MEMS sit in every phone — Feynman's room is now an industry</span></div>
+      </div>
+    </div>
+
+    <!-- Powers-of-ten explorer (js/scale.js) -->
+    <div class="scale-box">
+      <div class="scale-head">
+        <h3>Dive into the small world</h3>
+        <button class="chip-btn" id="scalePlay">▶ Dive to the atom</button>
+      </div>
+      <canvas id="scaleCanvas" height="340" aria-label="Powers of ten zoom from human scale to atoms"></canvas>
+      <div class="scale-ui">
+        <input type="range" id="scaleSlider" min="-0.4" max="10.3" step="0.01" value="-0.2" aria-label="Length scale (drag right to zoom in)">
+        <div class="scale-legend"><span style="left:3.74%">1 m</span><span style="left:31.78%">1 mm</span><span style="left:59.81%">1 μm</span><span style="left:87.85%">1 nm</span></div>
+        <div class="scale-read">
+          <b id="scaleSize">1 m</b>
+          <span id="scaleZone" class="zone">Human scale</span>
+          <p id="scaleText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 5. PEOPLE (data/team.csv) ======================= -->
+<section class="sec" id="people">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 04</p>
+      <h2>People</h2>
+      <p class="sec-lead">Founders, collaborators and the student researchers of S³ Lab.</p>
+    </header>
+    <div class="faculty" id="facultyList"></div>
+    <h3 class="sub">Collaborators</h3>
+    <div class="collab" id="collabList"></div>
+    <div class="sub-row">
+      <h3 class="sub">Students</h3>
+      <div class="filters" id="studentFilters">
+        <button class="pill on" data-f="all">All</button>
+        <button class="pill" data-f="phd">PhD</button>
+        <button class="pill" data-f="msc">MSc</button>
+        <button class="pill" data-f="bsc">BSc</button>
+        <button class="pill" data-f="alumni">Alumni</button>
+      </div>
+    </div>
+    <div class="students" id="studentList"></div>
+    <div class="join">
+      <div>
+        <h3>Join S³ Lab</h3>
+        <p>We are looking for motivated MSc students for <b>15 thesis topics</b> across the five axes.
+          Strong interest in mechanics, programming (MATLAB/Python) or control is a plus.</p>
+      </div>
+      <a class="btn btn-gold" href="#projects" data-open-filter="open">See open topics</a>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 6. PROJECTS (data/projects.csv) ======================= -->
+<section class="sec sec-tint" id="projects">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 05</p>
+      <h2>Projects &amp; thesis topics</h2>
+      <p class="sec-lead">Completed and ongoing work, plus open MSc thesis topics — each tied to a research axis.</p>
+    </header>
+    <div class="filters" id="projectFilters">
+      <button class="pill on" data-f="all">All</button>
+      <button class="pill" data-f="ongoing">Ongoing</button>
+      <button class="pill" data-f="completed">Completed</button>
+      <button class="pill" data-f="open">Open theses</button>
+    </div>
+    <div class="projects" id="projectList"></div>
+  </div>
+</section>
+
+<!-- ======================= 7. PUBLICATIONS (data/publications.csv) ======================= -->
+<section class="sec" id="publications">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 06</p>
+      <h2>Selected publications</h2>
+      <p class="sec-lead">A selection of works by the group. Full, always-up-to-date lists are on
+        <a href="https://scholar.google.com/citations?user=PQLP73IAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a> and
+        <a href="https://www.scopus.com/authid/detail.uri?authorId=36613214200" target="_blank" rel="noopener">Scopus</a>.</p>
+    </header>
+    <div class="pub-tools">
+      <input type="search" id="pubSearch" placeholder="Search title, author, journal…" aria-label="Search publications">
+      <span class="pub-count" id="pubCount"></span>
+    </div>
+    <div class="pubs" id="pubList"></div>
+  </div>
+</section>
+
+<!-- ======================= 8. ENCYCLOPEDIA TEASER ======================= -->
+<section class="sec sec-dark sec-ency" id="encyclopedia">
+  <div class="wrap ency-teaser">
+    <div>
+      <p class="sec-no">S³ / 07</p>
+      <h2>The MEMS/NEMS Encyclopedia</h2>
+      <p class="sec-lead">A growing, searchable dictionary of <b id="termCount">100</b> key terms — from
+        pull-in instability and the Casimir force to PINNs and digital twins.</p>
+      <form class="ency-search" action="encyclopedia.html" method="get">
+        <input type="search" name="q" placeholder="Search a term, e.g. “Casimir”" aria-label="Search the encyclopedia">
+        <button class="btn btn-gold" type="submit">Search</button>
+      </form>
+    </div>
+    <article class="term-card" id="termOfDay" aria-live="polite">
+      <p class="term-label">Term of the day</p>
+      <h3>…</h3>
+    </article>
+  </div>
+</section>
+
+<!-- ======================= 9. RESOURCES (data/facilities.csv) ======================= -->
+<section class="sec" id="resources">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 08</p>
+      <h2>Resources &amp; open science</h2>
+      <p class="sec-lead">Computational infrastructure, software and the research assets we share with the community.</p>
+    </header>
+    <div class="resources" id="resourceList"></div>
+  </div>
+</section>
+
+<!-- ======================= 10. NEWS (data/events.csv) ======================= -->
+<section class="sec sec-tint" id="news">
+  <div class="wrap">
+    <header class="sec-head">
+      <p class="sec-no">S³ / 09</p>
+      <h2>News &amp; events</h2>
+    </header>
+    <div class="news-cols">
+      <div><h3 class="sub">Upcoming</h3><div class="timeline" id="newsUpcoming"></div></div>
+      <div><h3 class="sub">Recent</h3><div class="timeline timeline-past" id="newsPast"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 11. CONTACT ======================= -->
+<section class="sec sec-dark" id="contact">
+  <div class="wrap contact">
+    <div>
+      <p class="sec-no">S³ / 10</p>
+      <h2>Contact</h2>
+      <p class="sec-lead">Prospective students, collaborators and industry partners are welcome.</p>
+      <p class="sister">Sister lab: <a href="https://goharimanesh.github.io/ARCSLAB/" target="_blank" rel="noopener">ARCSLAB — Advanced Robotics &amp; Control Systems Lab</a></p>
+    </div>
+    <address class="contact-card">
+      <div><small>E-mail</small>
+        <!-- TODO: replace with the official lab e-mail if one is created -->
+        <a href="mailto:A.koochi@torbath.ac.ir">A.koochi@torbath.ac.ir</a></div>
+      <div><small>Address</small>
+        S³ Lab, Department of Mechanical Engineering<br>
+        University of Torbat Heydarieh<br>
+        7th km of Torbat Heydarieh – Mashhad Road<br>
+        Torbat Heydarieh, Razavi Khorasan, Iran · 9516168595</div>
+      <div><small>University</small><a href="https://www.torbath.ac.ir" target="_blank" rel="noopener">www.torbath.ac.ir</a></div>
+    </address>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>© <span id="year"></span> S³ Lab — Smart Small Systems Laboratory · University of Torbat Heydarieh</span>
+    <span class="foot-motto">Small Systems · Big Ideas · Greater Impact</span>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<!-- Lightbox for the Feynman infographic -->
+<dialog class="lightbox" id="lightbox">
+  <button class="lb-close" aria-label="Close">✕</button>
+  <img src="assets/images/feynman/plenty-of-room-infographic.jpg" alt="Plenty of Room at the Bottom infographic, full size">
+</dialog>
+
+<script src="js/csv.js"></script>
+<script src="js/tweezer.js"></script>
+<script src="js/scale.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

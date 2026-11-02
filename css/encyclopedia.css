@@ -1,0 +1,52 @@
+/* ================================================================
+   Encyclopedia page — extra styles (colours come from style.css)
+   ================================================================ */
+.ency-hero { background: radial-gradient(800px 400px at 85% 0%, rgba(0,180,219,.2), transparent 70%), var(--hex), var(--navy); color: #fff; padding: 72px 0 40px; }
+.ency-hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; letter-spacing: -.02em; }
+.ency-hero h1 span { color: var(--cyan); }
+.ency-hero .sec-no { color: var(--cyan); }
+.ency-hero .sec-lead { color: #b4c4dc; max-width: 760px; }
+.ency-hero .sec-lead b { color: var(--gold); }
+.e-search { display: flex; gap: 10px; margin-top: 28px; max-width: 760px; }
+.e-search input { flex: 1; padding: 15px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.07); color: #fff; font: inherit; font-size: 1.02rem; }
+.e-search input::placeholder { color: #8ea3c4; }
+.e-search input:focus { outline: 2px solid var(--cyan); }
+.e-cats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+.e-cat { border: 1px solid rgba(255,255,255,.2); background: transparent; color: #c6d3e6; padding: 6px 14px; border-radius: 999px; font-size: .84rem; cursor: pointer; }
+.e-cat b { font-family: var(--mono); font-weight: 400; color: #8ea3c4; margin-left: 4px; }
+.e-cat:hover { border-color: var(--cyan); color: #fff; }
+.e-cat.on { background: var(--cyan); color: var(--navy); border-color: var(--cyan); }
+.e-cat.on b { color: var(--navy); }
+
+.az { position: sticky; top: 68px; z-index: 20; display: flex; flex-wrap: wrap; gap: 2px; padding-top: 10px; padding-bottom: 10px; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); max-width: none; justify-content: center; }
+.az a, .az span { font-family: var(--mono); font-size: .85rem; width: 30px; height: 30px; display: grid; place-items: center; border-radius: 8px; }
+.az a { color: var(--navy); font-weight: 700; }
+.az a:hover { background: var(--navy); color: var(--gold); text-decoration: none; }
+.az span { color: #c3cddb; }
+
+.e-body { padding-top: 30px; padding-bottom: 90px; }
+.e-status { color: var(--ink-2); font-size: .9rem; font-family: var(--mono); }
+.e-letter { grid-column: 1 / -1; font-family: var(--head); font-size: 2rem; font-weight: 800; color: var(--navy); margin: 26px 0 0; display: flex; align-items: center; gap: 14px; scroll-margin-top: 130px; }
+.e-letter::after { content: ""; flex: 1; height: 2px; background: linear-gradient(90deg, var(--cyan), transparent); }
+.e-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
+.e-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; position: relative; scroll-margin-top: 130px; transition: border-color .25s, box-shadow .25s; }
+.e-card:hover { border-color: var(--cyan); box-shadow: var(--shadow); }
+.e-card.target { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(255,215,0,.35), var(--shadow); }
+.e-card .cat { font-family: var(--mono); font-size: .66rem; text-transform: uppercase; letter-spacing: .12em; color: var(--gold-ink); }
+.e-card h2 { font-size: 1.16rem; margin: 6px 0 8px; color: var(--navy); }
+.e-card h2 abbr { text-decoration: none; font-family: var(--mono); font-size: .72rem; background: var(--navy); color: var(--gold); padding: 2px 7px; border-radius: 6px; margin-left: 6px; vertical-align: middle; }
+.e-card p { margin: 0 0 10px; color: var(--ink-2); font-size: .94rem; }
+.e-card .formula { font-size: .86rem; }
+.e-rel { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; font-size: .78rem; }
+.e-rel > span { color: var(--ink-2); font-family: var(--mono); font-size: .7rem; }
+.e-rel a, .e-rel em { padding: 3px 10px; border-radius: 999px; background: #e6f6fb; color: var(--cyan-ink); font-style: normal; }
+.e-rel a:hover { background: var(--cyan); color: var(--navy); text-decoration: none; }
+.e-link { position: absolute; top: 18px; right: 18px; border: 0; background: none; color: #a9b6c8; cursor: pointer; font-size: .9rem; }
+.e-link:hover { color: var(--cyan-ink); }
+mark { background: #fff1a6; color: inherit; border-radius: 3px; padding: 0 1px; }
+
+@media (max-width: 640px) {
+  .e-search { flex-direction: column; }
+  .e-grid { grid-template-columns: 1fr; }
+  .az { top: 68px; justify-content: flex-start; overflow-x: auto; flex-wrap: nowrap; padding-left: 16px; }
+}

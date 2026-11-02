@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--
+  S³ LAB — MEMS/NEMS Encyclopedia
+  The terms come from data/glossary.csv (one row per term).
+  Columns: term, abbr, category, definition, formula, related
+  "related" lists other terms separated by semicolons ;
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MEMS/NEMS Encyclopedia | S³ Lab</title>
+  <meta name="description" content="A searchable encyclopedia of MEMS and NEMS terms — pull-in instability, Casimir force, nonlocal elasticity, nanotweezers, PINNs, digital twins and more. By S³ Lab, University of Torbat Heydarieh.">
+  <meta name="theme-color" content="#0A1A3A">
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/encyclopedia.css">
+</head>
+<body>
+<header class="topbar" id="top">
+  <nav class="nav wrap" aria-label="Main">
+    <a class="brand" href="index.html" aria-label="S³ Lab home">
+      <img src="assets/images/logo/sss-logo.svg" alt="" width="40" height="40">
+      <span class="brand-text"><b>S<sup>3</sup> Lab</b><small>Smart Small Systems</small></span>
+    </a>
+    <button class="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <ul class="menu">
+      <li><a href="index.html#research">Research</a></li>
+      <li><a href="index.html#people">People</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="index.html#publications">Publications</a></li>
+      <li><a href="encyclopedia.html" class="menu-ency active">Encyclopedia</a></li>
+      <li><a href="index.html#contact" class="menu-cta">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <section class="ency-hero">
+    <div class="wrap">
+      <p class="sec-no">S³ / ENCYCLOPEDIA</p>
+      <h1>MEMS &amp; NEMS <span>Encyclopedia</span></h1>
+      <p class="sec-lead">Clear, short definitions of the concepts behind micro- and nano-electromechanical systems —
+        written by S³ Lab for students and researchers. <b id="eCount">…</b> terms and growing.</p>
+      <div class="e-search">
+        <input type="search" id="eSearch" placeholder="Search terms, abbreviations or definitions…" aria-label="Search the encyclopedia" autocomplete="off">
+        <button class="btn btn-gold" id="eRandom" type="button">Random term ↻</button>
+      </div>
+      <div class="e-cats" id="eCats" aria-label="Filter by category"></div>
+    </div>
+  </section>
+
+  <nav class="az wrap" id="eAZ" aria-label="Jump to letter"></nav>
+
+  <section class="wrap e-body">
+    <p class="e-status" id="eStatus" aria-live="polite"></p>
+    <div class="e-grid" id="eGrid"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>© <span id="year"></span> S³ Lab — Smart Small Systems Laboratory · University of Torbat Heydarieh</span>
+    <span class="foot-motto">Small Systems · Big Ideas · Greater Impact</span>
+    <a href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script src="js/csv.js"></script>
+<script src="js/encyclopedia.js"></script>
+</body>
+</html>

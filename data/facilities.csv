@@ -1,0 +1,7 @@
+name,category,description,icon
+High-Performance Computing Workstations,Computing,"Multi-core workstations for GDQ, FEM and neural-network training (PINN, surrogate models).",cpu
+Multiphysics Simulation Suite,Software,"COMSOL Multiphysics, ANSYS and ABAQUS for coupled electro-mechanical, piezoelectric and thermal analysis.",layers
+MATLAB / Simulink & Python AI Stack,Software,"MATLAB, Simulink, RL Toolbox, MATCONT; Python with PyTorch, TensorFlow, DeepXDE, scikit-learn and Stable-Baselines3.",code
+Interactive Simulator Library,Open Science,"Browser-based simulators of nanotweezers, pull-in instability and resonators — usable in teaching and outreach.",play
+Open Code & Data Repositories,Open Science,"One GitHub repository per research axis plus Zenodo datasets with DOIs, released with each accepted paper.",git
+Research Library,Knowledge,"Reference books, the lab's Elsevier monograph and a curated MEMS/NEMS literature database.",book
